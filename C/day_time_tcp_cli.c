@@ -3,31 +3,15 @@
 #include <string.h>
 #include <unistd.h>
 #include <arpa/inet.h>
-#include <sys/socket.h>
 #include <stdarg.h>   // for variadic functions
+// ------------------------------------
+#include "err.h"
+#include "wrapsock.h"
+#include "wrap_inet_pton.h"
+#include "wrap_socket_connect.h"
 
 #define MAXLINE 4096
 #define SA struct sockaddr
-
-// Error-handling functions (printf-style)
-void err_quit(const char *fmt, ...) {
-    va_list ap;
-    va_start(ap, fmt);
-    vfprintf(stderr, fmt, ap);
-    fprintf(stderr, "\n");
-    va_end(ap);
-    exit(1);
-}
-
-void err_sys(const char *fmt, ...) {
-    va_list ap;
-    va_start(ap, fmt);
-    vfprintf(stderr, fmt, ap);
-    fprintf(stderr, ": ");
-    perror("");
-    va_end(ap);
-    exit(1);
-}
 
 int main(int argc, char **argv)
 {
@@ -37,19 +21,16 @@ int main(int argc, char **argv)
 
     if (argc != 2)
         err_quit("usage: %s <IPaddress>", argv[0]);
-
-    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-        err_sys("socket error");
+     
+    sockfd = Socket(AF_INET, SOCK_STREAM, 0);
 
     bzero(&servaddr, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
     servaddr.sin_port   = htons(13);  /* daytime server */
 
-    if (inet_pton(AF_INET, argv[1], &servaddr.sin_addr) <= 0)
-        err_quit("inet_pton error for %s", argv[1]);
+    InetPton(AF_INET, argv[1], &servaddr.sin_addr);
 
-    if (connect(sockfd, (SA *) &servaddr, sizeof(servaddr)) < 0)
-        err_sys("connect error");
+    Connect(sockfd, (SA *) &servaddr, sizeof(servaddr));
 
     while ((n = read(sockfd, recvline, MAXLINE)) > 0) {
         recvline[n] = 0;  /* null terminate */
