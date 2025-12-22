@@ -1,5 +1,17 @@
-#include	"unp.h"
-#include	<time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <stdarg.h>
+//---------------------
+#include "err.h"
+#include "wrapsock.h"
+#include "wrap_socket_bind.h"
+//---------------------
+#define MAXLINE 4096
+#define SA struct sockaddr 
+
 
 int main(int argc, char **argv) {
 	int					listenfd, connfd;
@@ -16,15 +28,15 @@ int main(int argc, char **argv) {
 
 	Bind(listenfd, (SA *) &servaddr, sizeof(servaddr));
 
-	Listen(listenfd, LISTENQ);
+  // Listen(listenfd, LISTENQ);
 
-	for ( ; ; ) {
-		connfd = Accept(listenfd, (SA *) NULL, NULL);
+	// for ( ; ; ) {
+	//	connfd = Accept(listenfd, (SA *) NULL, NULL);
 
-    ticks = time(NULL);
-    snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
-    Write(connfd, buff, strlen(buff));
+  //  ticks = time(NULL);
+  //  snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
+  //  Write(connfd, buff, strlen(buff));
 
-		Close(connfd);
-	}
+	//	Close(connfd);
+	// }
 }
