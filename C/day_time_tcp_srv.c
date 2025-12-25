@@ -8,8 +8,10 @@
 #include "err.h"
 #include "wrapsock.h"
 #include "wrap_socket_bind.h"
+#include "wrap_listen_connect.h"
 //---------------------
 #define MAXLINE 4096
+#define LISTENQ 1024
 #define SA struct sockaddr 
 
 
@@ -28,15 +30,15 @@ int main(int argc, char **argv) {
 
 	Bind(listenfd, (SA *) &servaddr, sizeof(servaddr));
 
-  // Listen(listenfd, LISTENQ);
+  Listen(listenfd, LISTENQ);
 
-	// for ( ; ; ) {
-	//	connfd = Accept(listenfd, (SA *) NULL, NULL);
+	for ( ; ; ) {
+	  // connfd = Accept(listenfd, (SA *) NULL, NULL);
 
   //  ticks = time(NULL);
   //  snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
   //  Write(connfd, buff, strlen(buff));
 
 	//	Close(connfd);
-	// }
+	 }
 }
