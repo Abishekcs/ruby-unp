@@ -4,11 +4,13 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <stdarg.h>
+#include <errno.h>
 //---------------------
 #include "err.h"
 #include "wrapsock.h"
 #include "wrap_socket_bind.h"
 #include "wrap_listen_connect.h"
+#include "wrap_accept.h"
 //---------------------
 #define MAXLINE 4096
 #define LISTENQ 1024
@@ -33,12 +35,12 @@ int main(int argc, char **argv) {
   Listen(listenfd, LISTENQ);
 
 	for ( ; ; ) {
-	  // connfd = Accept(listenfd, (SA *) NULL, NULL);
+	  connfd = Accept(listenfd, (SA *) NULL, NULL);
 
-  //  ticks = time(NULL);
-  //  snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
-  //  Write(connfd, buff, strlen(buff));
+    // ticks = time(NULL);
+    //  snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
+    //  Write(connfd, buff, strlen(buff));
 
-	//	Close(connfd);
-	 }
+	  //	Close(connfd);
+	}
 }
