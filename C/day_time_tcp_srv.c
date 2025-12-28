@@ -12,6 +12,8 @@
 #include "wrap_socket_bind.h"
 #include "wrap_listen_connect.h"
 #include "wrap_accept.h"
+#include "wrap_write.h"
+#include "wrap_close.h"
 //---------------------
 #define MAXLINE 4096
 #define LISTENQ 1024
@@ -42,6 +44,6 @@ int main(int argc, char **argv) {
     snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
     Write(connfd, buff, strlen(buff));
 
-	  //	Close(connfd);
+	  Close(connfd);
 	}
 }
