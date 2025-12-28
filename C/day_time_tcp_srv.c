@@ -5,6 +5,7 @@
 #include <arpa/inet.h>
 #include <stdarg.h>
 #include <errno.h>
+#include <time.h>
 //---------------------
 #include "err.h"
 #include "wrapsock.h"
@@ -37,9 +38,9 @@ int main(int argc, char **argv) {
 	for ( ; ; ) {
 	  connfd = Accept(listenfd, (SA *) NULL, NULL);
 
-    // ticks = time(NULL);
-    //  snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
-    //  Write(connfd, buff, strlen(buff));
+    ticks = time(NULL);
+    snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
+    Write(connfd, buff, strlen(buff));
 
 	  //	Close(connfd);
 	}
