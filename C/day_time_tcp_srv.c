@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
 	  connfd = Accept(listenfd, (SA *) NULL, NULL);
 
     ticks = time(NULL);
-    snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
+    snprintf(buff, sizeof(buff), "Hello From Server %.24s\r\n", ctime(&ticks));
     Write(connfd, buff, strlen(buff));
 
 	  Close(connfd);
