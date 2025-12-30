@@ -19,9 +19,9 @@ int main(int argc, char **argv)
     char recvline[MAXLINE + 1];
     struct sockaddr_in servaddr;
 
-    if (argc != 2)
-        err_quit("usage: %s <IPaddress>", argv[0]);
-     
+    if (argc != 3)
+      err_quit("usage: %s <IPaddress>", argv[1]);
+ 
     sockfd = Socket(AF_INET, SOCK_STREAM, 0);
 
     bzero(&servaddr, sizeof(servaddr));
